@@ -70,13 +70,16 @@ export const AppContextProvider = (props) => {
 	// add product to cart
 	const addToCart = async (itemId) => {
 		let cartData = structuredClone(cartItems);
+
 		if (cartData[itemId]) {
 			cartData[itemId] += 1;
 		}
 		else {
 			cartData[itemId] = 1;
 		}
+
 		setCartItems(cartData);
+		toast.success("Item added to cart successfully!")
 	}
 
 	// update cart item quantity
