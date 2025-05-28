@@ -31,7 +31,16 @@ export const AppContextProvider = (props) => {
 
 	// fetch all products
 	const fetchProductData = async () => {
-		setProducts(productsDummyData)
+		try {
+			const { data } = await axios.get("/api/product/list")
+			if (data.success) {
+				setProducts(data.products)
+			} else {
+				toast.error(data.message)
+			}
+		} catch (error) {
+			toast.error(error.message)
+		}
 	}
 
 	// fetch user auth status, user data and cart items
