@@ -6,6 +6,7 @@ import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 
 export const AppContext = createContext();
@@ -30,7 +31,16 @@ export const AppContextProvider = (props) => {
 
 	// fetch all products
 	const fetchProductData = async () => {
-		setProducts(productsDummyData)
+		try {
+			const { data } = await axios.get("/api/product/list")
+			if (data.success) {
+				setProducts(data.products)
+			} else {
+				toast.error(data.message)
+			}
+		} catch (error) {
+			toast.error(error.message)
+		}
 	}
 
 	// fetch user auth status, user data and cart items
@@ -60,13 +70,16 @@ export const AppContextProvider = (props) => {
 	// add product to cart
 	const addToCart = async (itemId) => {
 		let cartData = structuredClone(cartItems);
+
 		if (cartData[itemId]) {
 			cartData[itemId] += 1;
 		}
 		else {
 			cartData[itemId] = 1;
 		}
+
 		setCartItems(cartData);
+		toast.success("Item added to cart successfully!")
 	}
 
 	// update cart item quantity
