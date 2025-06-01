@@ -1,6 +1,5 @@
 "use client"
 
-
 import { productsDummyData, userDummyData } from "@/assets/assets";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -8,14 +7,11 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-
 export const AppContext = createContext();
-
 
 export const useAppContext = () => {
 	return useContext(AppContext)
 }
-
 
 export const AppContextProvider = (props) => {
 	const currency = process.env.NEXT_PUBLIC_CURRENCY
