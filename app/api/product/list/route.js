@@ -4,19 +4,18 @@ import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
-    await connectDB()
+    await connectDB();
 
-    const products = await Product.find({})
-
+    const products = await Product.find({});
     return NextResponse.json({
       success: true,
       message: "Products fetched successfully!",
       products
-    })
+    });
   } catch (error) {
     return NextResponse.json({
       success: false,
       message: error.message
-    })
+    });
   }
 }
